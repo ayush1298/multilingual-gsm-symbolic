@@ -15,7 +15,7 @@ id_orig = 410
 id_shuffled = 40
 
 question_annotated = """
-{name} fuhr in den Urlaub an die Küste. Ihre Eltern gaben ihr {total,75} kr, damit sie kaufen konnte, was sie wollte. Im Kiosk wurden Bonbons angeboten mit „Kaufe {n1,500} Gramm für {p1,20} kr, erhalte {n2,500} Gramm zum {discount,1/2} Preis.“ Sie nahm {n12,1100} Gramm. Sie kaufte auch eine gemischte Tüte mit Muschelschalen, die {p2,17} kr kostete, und {n3,4} Magnete, die {p3,2} kr pro Stück kosteten. Wie viel Geld hat {name} übrig?
+{name,Sarah} fuhr in den Urlaub an die Küste. Ihre Eltern gaben ihr {total,75} kr, damit sie kaufen konnte, was sie wollte. Im Kiosk wurden Bonbons angeboten mit „Kaufe {n1,500} Gramm für {p1,20} kr, erhalte {n2,500} Gramm zum {discount,1/2} Preis.“ Sie nahm {n12,1100} Gramm. Sie kaufte auch eine gemischte Tüte mit Muschelschalen, die {p2,17} kr kostete, und {n3,4} Magnete, die {p3,2} kr pro Stück kosteten. Wie viel Geld hat {name} übrig?
 
 #init:
 - $total = range(30, 100, 15)

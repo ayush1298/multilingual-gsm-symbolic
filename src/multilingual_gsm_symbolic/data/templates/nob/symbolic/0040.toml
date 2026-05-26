@@ -15,7 +15,7 @@ id_orig = 410
 id_shuffled = 40
 
 question_annotated = """
-{name} dro til kysten på ferie. Foreldrene hennes ga henne {total,75} kr til å kjøpe akkurat det hun ville. I kiosken var karameller til salgs for "Kjøp {n1,500} gram for {p1,20} kr, få {n2,500} gram til {discount,1/2} pris." Hun tok {n12,1100} gram. Hun kjøpte også en blandet pose med skjell, som kostet {p2,17} kr, og {n3,4} magneter, som kostet {p3,2} kr per stykk. Hvor mye penger har {name} igjen?
+{name,Sarah} dro til kysten på ferie. Foreldrene hennes ga henne {total,75} kr til å kjøpe akkurat det hun ville. I kiosken var karameller til salgs for "Kjøp {n1,500} gram for {p1,20} kr, få {n2,500} gram til {discount,1/2} pris." Hun tok {n12,1100} gram. Hun kjøpte også en blandet pose med skjell, som kostet {p2,17} kr, og {n3,4} magneter, som kostet {p3,2} kr per stykk. Hvor mye penger har {name} igjen?
 
 #init:
 - $total = range(30, 100, 15)

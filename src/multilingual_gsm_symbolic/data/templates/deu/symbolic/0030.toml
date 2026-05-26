@@ -1,11 +1,5 @@
 question = "David hat 85,5 kr und möchte 16 Bolzen aus einer Kiste im Baumarkt kaufen. Jeder Bolzen kostet 0,2 kr. Wie viel Geld hat David übrig, nachdem er die {item_plural} bezahlt hat?"
-
-answer = """
-David bezahlte 16*0,2 kr = <<16*0,2=3,2>>3,2 kr für die Bolzen.
-David hat 85,5 kr - 3,2 kr = 82,3 kr übrig.
-#### 82,3
-"""
-
+answer = "David bezahlte 16*0,2 kr = <<16*0,2=3,2>>3,2 kr für die Bolzen.\nDavid hat 85,5 kr - 3,2 kr = 82 kr übrig.\n#### 82"
 id_orig = 873
 
 id_shuffled = 30

@@ -1,11 +1,5 @@
 question = "David har 85,5 kr og ønsker å kjøpe 16 bolter fra en kasse i byggevarehuset. Hver bolt koster 0,2 kr. Hvor mye penger har David igjen etter å ha betalt for boltene?"
-
-answer = """
-David betalte 16*0,2 kr = <<16*0,2=3,2>>3,2 kr for boltene.
-David har 85,5 kr - 3,2 kr = 82,3 kr igjen.
-#### 82,3
-"""
-
+answer = "David betalte 16*0,2 kr = <<16*0,2=3,2>>3,2 kr for boltene.\nDavid har 85,5 kr - 3,2 kr = 82 kr igjen.\n#### 82"
 id_orig = 873
 
 id_shuffled = 30

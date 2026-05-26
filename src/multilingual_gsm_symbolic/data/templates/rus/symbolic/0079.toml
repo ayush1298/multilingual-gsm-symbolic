@@ -1,8 +1,8 @@
-question = "Тобиас собрал половину пазла из 500 деталей, а затем за час начал собирать другой пазл из 500 деталей. Сколько деталей пазла Тобиас поставил за этот час?"
-answer = "Тобиас поставил 1/2*500 деталей = <<500*1/2=250>>250 деталей.\nТобиас собрал 250 деталей + 500 деталей = <<250+500=750>>750 деталей.\n#### 750\n"
+question = "Алексей собрал половину пазла из 500 деталей, а затем за час собрал ещё один пазл из 500 деталей. Сколько деталей пазла Алексей собрал за этот час?"
+answer = "В первом пазле Алексей собрал 1/2*500 деталей = <<500*1/2=250>>250 деталей.\nВсего Алексей собрал 250 деталей + 500 деталей = <<250+500=750>>750 деталей.\n#### 750"
 id_orig = 1074
 id_shuffled = 79
-question_annotated = "{name,Тобиас} собрал {frac_txt,половину} пазла из {n1,500} деталей, а затем за час начал собирать другой пазл из {n2,500} деталей. Сколько деталей пазла {name,Тобиас} поставил за этот час?\n\n#init:\n- name = sample(names)\n- frac_txt, frac_val = sample(fraction_alnum)\n- $n1 = range(100, 501)\n- $n2 = range(300, 1001)\n\n#conditions:\n- is_int(n1 * frac_val)\n\n#answer: int(n1 * frac_val) + n2\n"
-answer_annotated = "{name} поставил {frac_val}*{n1} деталей = <<{n1}*{frac_val}={int(n1*frac_val)}>>{int(n1*frac_val)} деталей.\n{name} собрал {int(n1*frac_val)} деталей + {n2} деталей = <<{int(n1*frac_val)}+{n2}={int(n1*frac_val)+n2}>>{int(n1*frac_val)+n2} деталей.\n#### {int(n1*frac_val)+n2}\n"
+question_annotated = "{name,Алексей} собрал {frac_phrase,половину} пазла из {n1,500} деталей, а затем за час собрал ещё один пазл из {n2,500} деталей. Сколько деталей пазла {name,Алексей} собрал за этот час?\n\n#init:\n- name = sample(names_male)\n- frac_phrase, frac_val = sample([(\"пятую часть\", \"1/5\"), (\"три пятых\", \"3/5\"), (\"половину\", \"1/2\"), (\"четверть\", \"1/4\"), (\"три четверти\", \"3/4\"), (\"треть\", \"1/3\"), (\"две трети\", \"2/3\")])\n- $n1 = range(100, 501)\n- $n2 = range(300, 1001)\n\n#conditions:\n- is_int(n1 * frac_val)\n\n#answer: int(n1 * frac_val) + n2\n"
+answer_annotated = "В первом пазле {name} собрал {frac_val}*{n1} деталей = <<{n1}*{frac_val}={int(n1*frac_val)}>>{int(n1*frac_val)} деталей.\nВсего {name} собрал {int(n1*frac_val)} деталей + {n2} деталей = <<{int(n1*frac_val)}+{n2}={int(n1*frac_val)+n2}>>{int(n1*frac_val)+n2} деталей.\n#### {int(n1*frac_val)+n2}\n"
 creation = "machine-translated from Danish using gpt-5.4, based on Danish templates; computationally validated"
 language = "rus"

@@ -26,6 +26,10 @@ test:
 	@echo "--- 🧪 Running tests ---"
 	uv run pytest -vv
 
+build-dataset:
+	@echo "--- 🔖 Bumping version ---"
+	uv run hf_dataset/generate_hf_dataset.py
+
 publish:
 	@echo "--- 📦 Publishing to PyPI ---"
 	rm -rf dist

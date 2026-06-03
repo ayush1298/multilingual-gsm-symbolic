@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from multilingual_gsm_symbolic.gsm_parser import AnnotatedQuestion
+from multilingual_gsm_symbolic.templates import AnnotatedQuestion
 
 pairs_path = Path(__file__).parent / "test_templates" / "test_json_toml_loading"
 

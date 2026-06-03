@@ -4,7 +4,8 @@ from random import Random
 import pytest
 from conftest import get_lightly_constrained_template_files, get_unconstrained_template_files
 
-from multilingual_gsm_symbolic.gsm_parser import AnnotatedQuestion, Question
+from multilingual_gsm_symbolic._helpers import range_possibilities_str, range_str
+from multilingual_gsm_symbolic.templates import AnnotatedQuestion, Question
 
 
 def _multi_var_constrained_template() -> AnnotatedQuestion:
@@ -54,7 +55,6 @@ def test_range_str_tuple_order_matches_range_possibilities_str():
     Bug: range_possibilities_str returned (numbers[i-1], i) while range_str returned (i, numbers[i-1]).
     Templates like `d_val, d_txt = range_str(...)` rely on the first element being the int.
     """
-    from multilingual_gsm_symbolic.gsm_parser import range_possibilities_str, range_str
 
     numbers = ["en", "to", "tre", "fire", "fem"]
     possibilities = range_possibilities_str(1, 6, 1, numbers)

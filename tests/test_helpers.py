@@ -2,7 +2,7 @@
 
 import pytest
 
-from multilingual_gsm_symbolic.gsm_parser import plural
+from multilingual_gsm_symbolic._helpers import plural
 
 
 @pytest.mark.parametrize(

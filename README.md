@@ -277,7 +277,7 @@ The following table shows the list of validated languages:
 
 ### Want to add a new language?
 
-Want to add a new language or validate an existing one? Great to hear. `src/data/**` folder contains all the templates for a specific languages and `scripts/translate_templates.py` can be used to translate the templates from one language to another. We have already pre-generated few language, see the data folder for which ones. Once you have validated the examples you can submit a PR with the changes.
+Want to add a new language or validate an existing one? Great to hear. The [`src/multilingual_gsm_symbolic/data/templates/`](src/multilingual_gsm_symbolic/data/templates/) folder contains the templates for each language, and [`src/scripts/translate_templates.py`](src/scripts/translate_templates.py) can be used to translate the templates from one language to another. We have already pre-generated a few languages; see the templates folder for which ones. Once you have validated the examples you can submit a PR with the changes.
 
 ## 📖 API reference
 

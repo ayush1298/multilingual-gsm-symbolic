@@ -1,6 +1,6 @@
 [project]
 name = "multilingual-gsm-symbolic"
-version = "0.4.14"
+dynamic = ["version"]
 description = "A package for generating multilingual symbolic GSM math problems"
 readme = "README.md"
 authors = [
@@ -19,8 +19,16 @@ eval = [
 ]
 
 [build-system]
-requires = ["uv_build>=0.9.26,<0.10.0"]
-build-backend = "uv_build"
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
+# used when building outside a git checkout (e.g. from a source archive without tags)
+fallback-version = "0.0.0"
+
+[tool.hatch.build.targets.sdist]
+include = ["src/multilingual_gsm_symbolic"]
 
 [tool.ruff]
 line-length = 120
@@ -31,8 +39,6 @@ select = ["E", "F", "I", "UP"]
 ignore = ["E501", "E741"]
 
 [tool.semantic_release]
-version_toml = ["pyproject.toml:project.version"]
-build_command = "pip install uv && uv build"
 tag_format = "v{version}"
 allow_zero_version = true
 major_on_zero = false

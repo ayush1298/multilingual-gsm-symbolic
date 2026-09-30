@@ -1,15 +1,13 @@
 # This workflow will, after the tests pass on main:
 # - Determine the next version from the conventional commits since the last tag
 #   (`feat:` -> minor, `fix:`/`perf:` -> patch; other commits do not trigger a release)
-# - Update the version in pyproject.toml, commit it and create a git tag
-# - Build the package and upload it to PyPI
-# - Create a release on GitHub
+# - Create and push a git tag for the new version (nothing is committed to main; the package
+#   version is read from the tag at build time by hatch-vcs)
+# - Build the package from the new tag and upload it to PyPI
+# - Create a release on GitHub with the built distributions
 #
-# It requires:
-# - a personal access token with the `repo` scope stored as the `RELEASE` secret. It must belong to a user
-#   allowed to bypass the "protect main" ruleset, as the version commit is pushed directly to main.
-# - trusted publishing set up on PyPI for this repository and workflow (release.yml), see:
-#   https://docs.pypi.org/trusted-publishers/
+# It requires trusted publishing to be set up on PyPI for this repository and workflow (release.yml), see:
+# https://docs.pypi.org/trusted-publishers/
 
 name: Release
 
@@ -18,6 +16,7 @@ on:
     workflows: ["Tests"]
     types:
       - completed
+  workflow_dispatch: # to release from an unchanged main
 
 jobs:
   release:
@@ -25,26 +24,44 @@ jobs:
     concurrency: release
     permissions:
       id-token: write # required for trusted publishing to PyPI
-      contents: write
+      contents: write # required to push the tag and create the GitHub release
 
+    # Under workflow_run, github.ref is always the default branch, so check what triggered the tests instead
     if: >-
-      github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.event == 'push' &&
-      github.event.workflow_run.head_branch == 'main'
+      github.event_name == 'workflow_dispatch' || (
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.event == 'push' &&
+        github.event.workflow_run.head_branch == 'main'
+      )
 
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
-          fetch-depth: 0
-          token: ${{ secrets.RELEASE }}
+          # release the commit that was tested, even if main has moved on since (github.sha on manual runs)
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          fetch-depth: 0 # semantic-release and hatch-vcs both read the version from the tag history
+
+      # semantic-release does not run on a detached HEAD, so name the checked out commit main
+      - name: Check out as main
+        run: git switch -C main
 
       - name: Python Semantic Release
         id: release
         uses: python-semantic-release/python-semantic-release@v10.7.0
         with:
-          github_token: ${{ secrets.RELEASE }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit: "false" # the version lives in the tags, and GITHUB_TOKEN cannot push to the protected main
           changelog: "false"
+          build: "false"
+
+      - name: Install uv
+        if: steps.release.outputs.released == 'true'
+        uses: astral-sh/setup-uv@v4
+
+      # Runs after the tag exists, so hatch-vcs picks up the released version
+      - name: Build package
+        if: steps.release.outputs.released == 'true'
+        run: uv build
 
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
@@ -54,5 +71,5 @@ jobs:
         uses: python-semantic-release/publish-action@v10.7.0
         if: steps.release.outputs.released == 'true'
         with:
-          github_token: ${{ secrets.RELEASE }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ steps.release.outputs.tag }}

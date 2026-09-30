@@ -1,0 +1,58 @@
+# This workflow will, after the tests pass on main:
+# - Determine the next version from the conventional commits since the last tag
+#   (`feat:` -> minor, `fix:`/`perf:` -> patch; other commits do not trigger a release)
+# - Update the version in pyproject.toml, commit it and create a git tag
+# - Build the package and upload it to PyPI
+# - Create a release on GitHub
+#
+# It requires:
+# - a personal access token with the `repo` scope stored as the `RELEASE` secret. It must belong to a user
+#   allowed to bypass the "protect main" ruleset, as the version commit is pushed directly to main.
+# - trusted publishing set up on PyPI for this repository and workflow (release.yml), see:
+#   https://docs.pypi.org/trusted-publishers/
+
+name: Release
+
+on:
+  workflow_run:
+    workflows: ["Tests"]
+    types:
+      - completed
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    concurrency: release
+    permissions:
+      id-token: write # required for trusted publishing to PyPI
+      contents: write
+
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'main'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.RELEASE }}
+
+      - name: Python Semantic Release
+        id: release
+        uses: python-semantic-release/python-semantic-release@v10.7.0
+        with:
+          github_token: ${{ secrets.RELEASE }}
+          changelog: "false"
+
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        if: steps.release.outputs.released == 'true'
+
+      - name: Publish package distributions to GitHub Releases
+        uses: python-semantic-release/publish-action@v10.7.0
+        if: steps.release.outputs.released == 'true'
+        with:
+          github_token: ${{ secrets.RELEASE }}
+          tag: ${{ steps.release.outputs.tag }}

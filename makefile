@@ -34,15 +34,9 @@ test:
 	uv run pytest -vv
 
 build-dataset:
-	@echo "--- 🔖 Bumping version ---"
-	uv run hf_dataset/generate_hf_dataset.py
+	@echo "--- 🔢 Generating dataset/ for new or changed templates ---"
+	uv run src/scripts/generate_dataset.py
 
-publish:
-	@echo "--- 📦 Publishing to PyPI ---"
-	rm -rf dist
-	uv build
-	uv publish
-
-bump-version:
-	@echo "--- 🔖 Bumping version ---"
-	uv version --bump patch
+build-hf-dataset:
+	@echo "--- 🤗 Building the Hugging Face dataset locally ---"
+	uv run src/scripts/build_hf_dataset.py build --out build/hf_dataset

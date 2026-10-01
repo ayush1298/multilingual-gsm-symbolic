@@ -200,7 +200,7 @@ def render_version(version: str, languages: list[Language]) -> str:
             f"| **Released** | {datetime.now(UTC):%Y-%m-%d} |",
             f"| **Generated from** | [`multilingual-gsm-symbolic` v{version}]({GITHUB_URL}/releases/tag/v{version}) |",
             f'| **Load this version** | `load_dataset("{REPO_ID}", name="eng", revision="v{version}")` |',
-            f"| **Languages** | {len(languages)} ({n_validated} validated, {len(languages) - n_validated} unvalidated) |",
+            f"| **Languages** | {len(languages)} ({n_validated} validated) |",
         ]
     )
 
